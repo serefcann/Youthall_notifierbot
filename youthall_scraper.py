@@ -1,12 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-from telegram import Bot
-from dotenv import load_dotenv
 import os
-load_dotenv('C:\\Users\\şerefcanmemiş\\Documents\\Projects\\youthall\\.env')
-bot_token = os.getenv('BOT_TOKEN')
-chat_id = os.getenv('CHAT_ID')
+
+bot_token = os.environ['BOT_TOKEN']
+chat_id = os.environ('CHAT_ID')
 global myfile_path
 myfile_path = 'C:\\Users\\şerefcanmemiş\\Documents\\Projects\\youthall\\youthall_jobs_links.json'
 

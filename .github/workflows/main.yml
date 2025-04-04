@@ -1,4 +1,4 @@
-name: Youthall Scraper
+name: Youthall Notifier
 
 on:
   schedule:
