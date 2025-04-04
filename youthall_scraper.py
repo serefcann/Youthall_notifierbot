@@ -4,7 +4,7 @@ import json
 import os
 
 bot_token = os.environ['BOT_TOKEN']
-chat_id = os.environ('CHAT_ID')
+chat_id = os.environ['CHAT_ID']
 global myfile_path
 myfile_path = 'C:\\Users\\şerefcanmemiş\\Documents\\Projects\\youthall\\youthall_jobs_links.json'
 
