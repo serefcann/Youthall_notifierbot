@@ -45,7 +45,7 @@ if '__main__' == __name__:
             r = requests.post(bot_url,data={'chat_id':chat_id,'text':job_link})
         if r.status_code == 200:
             print('Linkler Gonderildi')
-            #dump_jobs(saved_jobs+recent_jobs)
+            dump_jobs(saved_jobs+recent_jobs)
         else:
             print('bir hata meydana geldi')
     else:
