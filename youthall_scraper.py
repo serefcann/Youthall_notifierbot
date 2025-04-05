@@ -2,6 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import os
+from pymongo import MongoClient
+
+client = MongoClient(os.environ['MONGODB_URI'])
+db = client['Youthall_job_links']
+collection = db['job_links']
 
 bot_token = os.environ['BOT_TOKEN']
 chat_id = os.environ['CHAT_ID']
@@ -19,15 +24,15 @@ def scrape_jobs():
     jobs = jobSection.find_all('a')
     return [job.get('href') for job in jobs]
 
-def dump_jobs(new_jobs):
-    with open(myfile_path,'w+') as f:
-        json.dump(new_jobs,f,ensure_ascii=False,indent=1)
+def dump_jobs(new_jobs,collection):
+    prepared_newdoc = [{'link':link} for link in new_jobs]
+    collection.insert_many(prepared_newdoc)
 
-def load_jobs():
-    with open(myfile_path,'r') as f:
-        jobs = json.load(f)
-        return jobs
-
+def load_jobs(collection):
+    documents = collection.find({},{'link':1,'_id':0})
+    db_links = [doc['link'] for doc in documents]
+    return db_links
+    
 def get_recent_jobs(new_jobs,saved_jobs):
     new_jobsset,saved_jobsset = set(new_jobs),set(saved_jobs)
     recent_jobs = new_jobsset-saved_jobsset
@@ -37,7 +42,7 @@ bot_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
 
 if '__main__' == __name__:
     new_jobs = scrape_jobs()
-    saved_jobs = load_jobs()
+    saved_jobs = load_jobs(collection)
     recent_jobs = get_recent_jobs(new_jobs,saved_jobs)
     if recent_jobs:
         print('yeni is ilanlari bulundu!',recent_jobs)
@@ -45,16 +50,11 @@ if '__main__' == __name__:
             r = requests.post(bot_url,data={'chat_id':chat_id,'text':job_link})
         if r.status_code == 200:
             print('Linkler Gonderildi')
-            dump_jobs(saved_jobs+recent_jobs)
+            dump_jobs(recent_jobs,collection)
         else:
             print('bir hata meydana geldi')
     else:
         print('yeni is ilani bulunmadi')
-    
-    
-    
-
-
 
 
 
