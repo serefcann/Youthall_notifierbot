@@ -26,4 +26,22 @@ jobs:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+
+      - name: Get the public IP of the runner
+        id: get-ip
+        run: |
+          echo "ip-address=$(curl https://checkip.amazonaws.com)" >> "$GITHUB_OUTPUT"
+        
+      - name: Permit the runner to access MongoDB Atlas
+        id: allow-ip
+        run: |
+          curl \
+            --data '[{"ipAddress": "${{ steps.get-ip.outputs.ip-address }}", "comment":"GitHub Actions Runner"}]' \
+            --digest \
+            --header 'Accept: application/vnd.atlas.2023-02-01+json' \
+            --header 'Content-Type: application/json' \
+            --user "${{ secrets.MONGO_USERNAME }}:${{ secrets.MONGO_PASSWORD }}" \
+            "https://cloud.mongodb.com/api/atlas/v2/groups/670d169554b64c5d771a79a1/accessList"  
+        
+      - name: Run your script
         run: python youthall_scraper.py
