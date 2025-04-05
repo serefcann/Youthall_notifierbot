@@ -34,8 +34,8 @@ jobs:
             --digest \
             --header 'Accept: application/vnd.atlas.2023-02-01+json' \
             --header 'Content-Type: application/json' \
-            --user '${{ secrets.MONGO_USERNAME }}:${{ secrets.MONGO_PASSWORD }}' \
-            "https://cloud.mongodb.com/api/atlas/v2/groups/670d169554b64c5d771a79a1/accessList"  
+            --header "Authorization: Basic $(echo -n '${{ secrets.PUBLIC_KEY }}:${{ secrets.PRIVATE_KEY }}' | base64)" \
+            "https://cloud.mongodb.com/api/atlas/v2/670d169554b64c5d771a79a1/accessList"  
         
             
       - name: Ortam değişkenlerini ayarla
