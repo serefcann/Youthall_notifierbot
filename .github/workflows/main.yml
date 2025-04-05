@@ -1,0 +1,46 @@
+name: Youthall Notifier
+
+on:
+  schedule:
+    - cron: "0 */2 * * *"
+  workflow_dispatch: 
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo'yu klonla
+        uses: actions/checkout@v3
+
+      - name: Python kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11.5"
+
+      - name: Gereksinimleri yükle
+        run: pip install -r requirements.txt
+
+      - name: Public ip'yi al
+        id: get-ip
+        run: |
+          echo "ip-address=$(curl https://checkip.amazonaws.com)" >> "$GITHUB_OUTPUT"
+        
+      - name: MongoDB Atlas'a izin ver
+        id: allow-ip
+        run: |
+          curl \
+            --data '[{"ipAddress": "${{ steps.get-ip.outputs.ip-address }}", "comment":"GitHub Actions Runner"}]' \
+            --digest \
+            --header 'Accept: application/vnd.atlas.2023-02-01+json' \
+            --header 'Content-Type: application/json' \
+            --user '${{ secrets.MONGO_USERNAME }}:${{ secrets.MONGO_PASSWORD }}' \
+            "https://cloud.mongodb.com/api/atlas/v2/groups/670d169554b64c5d771a79a1/accessList"  
+        
+            
+      - name: Ortam değişkenlerini ayarla
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: python youthall_scraper.py
