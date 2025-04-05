@@ -2,8 +2,8 @@ name: Youthall Notifier
 
 on:
   schedule:
-    - cron: "0 * * * *"  # Her 10 dakikada bir çalışır
-  workflow_dispatch:        # Elle tetikleme için
+    - cron: "0 */2 * * *"
+  workflow_dispatch: 
 
 jobs:
   run-scraper:
