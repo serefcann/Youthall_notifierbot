@@ -3,10 +3,10 @@ import requests
 import json
 import os
 from pymongo import MongoClient
+import ssl
 
 client = MongoClient(os.environ['MONGODB_URI'],
-                    serverSelectionTimeoutMS=50000,  # Timeout süresini arttırıyoruz
-                    socketTimeoutMS=50000)
+                     ssl_sert_reqs=ssl.CERT_NONE)
 db = client['Youthall_job_links']
 collection = db['job_links']
 
