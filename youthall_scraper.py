@@ -6,7 +6,8 @@ from pymongo import MongoClient
 import ssl
 
 client = MongoClient(os.environ['MONGODB_URI'],
-                     ssl_sert_reqs=ssl.CERT_NONE)
+                     tls=True,
+                     tlsAllowInvalidCertificates=True)
 db = client['Youthall_job_links']
 collection = db['job_links']
 
