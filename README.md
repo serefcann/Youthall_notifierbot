@@ -4,7 +4,8 @@ Youthall web sitesinde yayımlanan yeni iş ilanlarını takip eder, daha önce 
 
 ## 📌 Amaç
 
-Yeni ilanları sürekli kontrol etmek yerine, bu bot sayesinde sadece yeni eklenen ilanlar Telegram üzerinden bildirilir. Böylece zaman kaybı ve tekrar eden kontrol işlemleri ortadan kalkar.
+Yeni ilanları sürekli kontrol etmek yerine, bu bot sayesinde sadece yeni eklenen ilanlar Telegram üzerinden bildirilir. GitHub Actions kullanarak bu botu belirli aralıklarla çalıştırır ve yeni ilanları otomatik olarak kontrol eder. Böylece zaman kaybı ve tekrar eden kontrol işlemleri ortadan kaldırır.
+
 
 ## 🧰 Kullanılan Teknolojiler
 
