@@ -54,3 +54,40 @@ CHAT_ID=telegram_chat_id
 ```bash
 python youthall_notifier.py
 ```
+
+1. **GitHub Actions Workflow Dosyası Ekleyin:**
+
+   GitHub Actions workflow dosyasını oluşturmak için proje kök dizininde `.github/workflows/` adında bir klasör oluşturun. Ardından, bu klasörde `bot_notification.yml` (veya istediğiniz başka bir isim) adlı bir dosya oluşturun.
+
+2. **Workflow İçeriği:**
+
+   Aşağıdaki içeriği `bot_notification.yml` dosyasına ekleyin:
+
+   ```yaml
+   name: Telegram Bot Notification
+
+   on:
+     schedule:
+       - cron: '0 * * * *'  # Her saat başı çalıştırır (İhtiyaca göre değiştirilebilir)
+     workflow_dispatch:  # Manuel tetikleme için
+     
+   jobs:
+     notify:
+       runs-on: ubuntu-latest
+
+       steps:
+         - name: Check out repository
+           uses: actions/checkout@v2
+
+         - name: Set up Python
+           uses: actions/setup-python@v2
+           with:
+             python-version: '3.x'
+
+         - name: Install dependencies
+           run: |
+             pip install -r requirements.txt
+
+         - name: Run the bot script
+           run: |
+             python bot_script.py  # Botunuzu çalıştıran Python dosyasının ismi
