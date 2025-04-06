@@ -13,8 +13,6 @@ collection = db['job_links']
 
 bot_token = os.environ['BOT_TOKEN']
 chat_id = os.environ['CHAT_ID']
-global myfile_path
-myfile_path = 'youthall_jobs_links.json'
 
 def scrape_jobs():
     url = 'https://www.youthall.com/tr/jobs/?order=1'
