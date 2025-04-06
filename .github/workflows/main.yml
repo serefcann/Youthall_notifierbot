@@ -43,4 +43,4 @@ jobs:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        run: python youthall_scraper.py
+        run: python youthall_notifier.py
