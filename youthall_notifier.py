@@ -3,7 +3,6 @@ import requests
 import json
 import os
 from pymongo import MongoClient
-import ssl
 
 client = MongoClient(os.environ['MONGODB_URI'],
                      tls=True,
@@ -58,4 +57,4 @@ if '__main__' == __name__:
         print('yeni is ilani bulunmadi')
 
 
-
+# a
